@@ -16,7 +16,7 @@ public class Conexion {
     private final String JDBC_PASSWORD = "admin";
 
     //Variable para crear la conexión, guardarla y devolverla
-    private Connection con = null;
+    protected Connection con = null;
 
     /**
      * Establece la conexión con la base de datos
