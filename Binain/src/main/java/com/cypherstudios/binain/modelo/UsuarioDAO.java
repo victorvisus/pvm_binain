@@ -34,14 +34,20 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
              */
             psUsuarios = con.prepareStatement(sqlUsuarios);
 
+            /* ESTA MAL PLANTEADO, para registrar a un usuario tiene que coger
+            los datos del formulario, en ese momento NO CREA EL OBJETO.
+            El objeto lo crea cuando inicié sesión el usuario, extrayendo todos
+            los datos de la BBDD
+
             psUsuarios.setString(1, usr.getNickName());
             psUsuarios.setString(2, Hash.sha1(usr.getPassword()));
             psUsuarios.setString(3, usr.getEmail());
             psUsuarios.setInt(4, usr.getIdTipoUsr());
-
+             */
             psUsuarios.executeUpdate();
 
             /* Extraigo el idUsuario generado en la base de datos */
+            //LO MISMO, tiene que coger el mail del formulario.
             int idUsuario = getIdUsr(usr.getEmail(), sqlIdUsuario, psIdUsuario, rs);
 
             /*
