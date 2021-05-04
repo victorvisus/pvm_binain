@@ -1,6 +1,7 @@
 package com.cypherstudios.binain.util;
 
-import com.cypherstudios.binain.exception.RegistroUsuasrioException;
+import com.cypherstudios.binain.exception.BinainException;
+import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -19,9 +20,9 @@ public class validaciones {
      * formulario de registro
      * @param passConf : String contraseña necesario para comprobar que el
      * usuario a escrito correctamente la contraseña
-     * @throws RegistroUsuasrioException
+     * @throws BinainException
      */
-    public static void valPassword(String pass, String passConf) throws RegistroUsuasrioException {
+    public static void valPassword(String pass, String passConf) throws BinainException {
 
         String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!-_@#$%^&+=])(?=\\S+$).{8,}";
         /*
@@ -34,13 +35,13 @@ public class validaciones {
          */
         System.out.println(pass.matches(pattern));
         if (!pass.equals(passConf)) {
-            throw new RegistroUsuasrioException(1);
+            throw new BinainException(1);
         }
         if (pass.length() <= 8) {
-            throw new RegistroUsuasrioException(2);
+            throw new BinainException(2);
         }
         if (!pass.matches(pattern)) {
-            throw new RegistroUsuasrioException(3);
+            throw new BinainException(3);
         }
         //La contraseña no deberia contener ninguno de los otros campos del formulario, nick, nombre, nombre de banda o sala....
     }
@@ -51,9 +52,9 @@ public class validaciones {
      *
      * @param email : String que contiene la dirección de correo introducida por
      * el usuario
-     * @throws RegistroUsuasrioException
+     * @throws BinainException
      */
-    public static void valCorreo(String email) throws RegistroUsuasrioException {
+    public static void valCorreo(String email) throws BinainException {
 
         String pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*@[a-zA-Z0-9]*\\.[a-z]{3,4}$";
         /*
@@ -63,7 +64,7 @@ public class validaciones {
         \\.[a-z]{3,4}$ tres o cuatro caracteres alfabéticos al final de la cadena
          */
         if (!email.matches(pattern)) {
-            throw new RegistroUsuasrioException(4);
+            throw new BinainException(4);
         }
     }
 
@@ -73,21 +74,29 @@ public class validaciones {
      *
      * @param rbtnArtista
      * @param rbtnSala
-     * @throws RegistroUsuasrioException
+     * @throws BinainException
      */
-    public static void valTipoUser(JRadioButton rbtnArtista, JRadioButton rbtnSala) throws RegistroUsuasrioException {
+    public static void valTipoUser(JRadioButton rbtnArtista, JRadioButton rbtnSala) throws BinainException {
 
         if (rbtnArtista.isSelected() == false && rbtnSala.isSelected() == false) {
-            throw new RegistroUsuasrioException(5);
+            throw new BinainException(5);
         }
 
     }
 
-    public static void valCamposNull(ArrayList<JTextField> campos) throws RegistroUsuasrioException {
-
+    /**
+     * Comprueba que los campos enviados en el ArrayList no estén vacíos.
+     *
+     * @param campos : ArraList que incluye los campos del formulario que no
+     * queremos que estén vacíos
+     * @throws BinainException
+     */
+    public static void valCamposNull(ArrayList<JTextField> campos) throws BinainException {
+        /*Estaria bien que el campo que este vacio lo pinte de alguna manera, pero
+        después al hacer focus deberia volver a su color original */
         for (JTextField aux : campos) {
             if (aux.getText().isEmpty()) {
-                throw new RegistroUsuasrioException(6);
+                throw new BinainException(6);
             }
         }
 

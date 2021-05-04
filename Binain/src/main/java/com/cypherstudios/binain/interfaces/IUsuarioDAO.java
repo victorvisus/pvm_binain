@@ -1,5 +1,6 @@
 package com.cypherstudios.binain.interfaces;
 
+import com.cypherstudios.binain.exception.BinainException;
 import com.cypherstudios.binain.modelo.Artista;
 import com.cypherstudios.binain.modelo.DatosPersonales;
 import com.cypherstudios.binain.modelo.Sala;
@@ -39,7 +40,7 @@ public interface IUsuarioDAO {
     /*
     SE TIENE QUE PODER ACCEDER SIN NECESIDAD
       DE INICIAR SESIÓN */
-    public abstract boolean iniciarSesion(Usuario user);
+    public abstract void iniciarSesion(Usuario user) throws BinainException, SQLException;
 
     /**
      * Actualiza la información del usuario en la BBDD

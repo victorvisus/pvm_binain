@@ -1,10 +1,9 @@
 package com.cypherstudios.binain.app;
 
+import com.cypherstudios.binain.controlador.CtrlInicio;
 import com.cypherstudios.binain.controlador.CtrlLogin;
+import com.cypherstudios.binain.controlador.CtrlPanelUsuario;
 import com.cypherstudios.binain.controlador.CtrlRegistroUser;
-import com.cypherstudios.binain.vista.Login;
-import com.cypherstudios.binain.vista.PanelRegistro;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -12,18 +11,13 @@ import javax.swing.JOptionPane;
  */
 public class mvpBinainApp {
 
+    public static CtrlInicio ctrlInicio = new CtrlInicio();
+    public static CtrlLogin ctrlLogin = new CtrlLogin();
+    public static CtrlRegistroUser ctrlRegistro = new CtrlRegistroUser();
+    public static CtrlPanelUsuario ctrlPanelUsuario = new CtrlPanelUsuario();
+
     public static void main(String[] args) {
-
-        //Vista
-//        PanelRegistro appRegistro = new PanelRegistro();
-//
-//        CtrlRegistroUser ctrlReg = new CtrlRegistroUser(appRegistro);
-//
-//        ctrlReg.iniciarRegistro();
-
-        Login appLogin = new Login();
-        CtrlLogin ctrlLogin = new CtrlLogin(appLogin);
-        ctrlLogin.iniciarLogin();
+        ctrlInicio.iniciarInicio();
     }
 
 }

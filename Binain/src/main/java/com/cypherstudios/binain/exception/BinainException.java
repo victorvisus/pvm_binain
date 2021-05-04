@@ -4,7 +4,7 @@ package com.cypherstudios.binain.exception;
  *
  * @author Victor
  */
-public class RegistroUsuasrioException extends Exception {
+public class BinainException extends Exception {
 
     private int codigoError;
 
@@ -12,7 +12,7 @@ public class RegistroUsuasrioException extends Exception {
      *
      * @param codigoError
      */
-    public RegistroUsuasrioException(int codigoError) {
+    public BinainException(int codigoError) {
         super();
         this.codigoError = codigoError;
     }
@@ -26,8 +26,9 @@ public class RegistroUsuasrioException extends Exception {
         String msjError = "";
         System.out.println(codigoError);
         switch (codigoError) {
+
             case 1:
-                // Contraseña no-Valida
+                //REGISTRO DE USUARIO: Contraseña no-Valida
                 msjError = "Las contraseñas introducidas no coinciden";
                 break;
             case 2:
@@ -37,24 +38,35 @@ public class RegistroUsuasrioException extends Exception {
                 msjError = "La contraseña debe incluir números, letras en mayúsculas y minúsculas y algún caracter especial ( !-_@#$%^&+= )";
                 break;
             case 4:
-                //e-mail no-Valido
+                //REGISTRO DE USUARIO: e-mail no-Valido
                 msjError = "La dirección de e-mail no es correcta";
                 break;
             case 5:
-                //RadioButton tiene que haber uno seleccionado
+                //REGISTRO DE USUARIO: RadioButton tiene que haber uno seleccionado
                 msjError = "Debes elegir un tipo de usuario: Sala o Artista";
                 break;
             case 6:
-                //Campos del formulario vacios
-                msjError = "Los campos Nick, Ciudad y el nombre de tu sala o de tu banda no pueden estar vacios";
+                //REGISTRO DE USUARIO: Campos del formulario vacios
+                msjError = "Hay campos que no pueden estar vacios";
                 break;
             case 7:
-                //Mail ya existe
+                //REGISTRO DE USUARIO: Mail ya existe
                 msjError = "La dirección de e-mail ya se encuentra en el sistema";
                 break;
             case 8:
-                //Usuario ya existe
+                //REGISTRO DE USUARIO: Usuario ya existe
                 msjError = "El usuario ya existe";
+                break;
+            case 9:
+                //INICIO DE SESIÓN: Contraseña incorrecta
+                msjError = "La contraseña es incorrecta";
+                break;
+            case 10:
+                //INICIO DE SESIÓN: El usuario no existe
+                msjError = "El usuario no existe";
+                break;
+            default:
+                msjError = "Error inesperado";
                 break;
         }
 

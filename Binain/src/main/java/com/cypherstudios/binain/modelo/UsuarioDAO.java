@@ -105,45 +105,16 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
         con.close();
     }
 
-    public void existeUsuario(Usuario usr) throws RegistroUsuasrioException, SQLException {
-        con = getConexion();
-
-        sql = "SELECT count(nickName) AS numero FROM usuarios WHERE nickName = ?";
-
-        ps = con.prepareStatement(sql);
-        ps.setString(1, usr.getNickName());
-
-        rs = ps.executeQuery();
-
-        while (rs.next()) {
-
-            int num = rs.getInt("numero");
-            if (num > 0) {
-                throw new RegistroUsuasrioException(8);
-            }
+    public void existeUsuario(Usuario usr) throws BinainException, SQLException {
+        if (cuentaUsuarios(usr) > 0) {
+            throw new BinainException(8);
         }
-
-        con.close();
     }
 
-    public void existeMail(Usuario usr) throws RegistroUsuasrioException, SQLException {
-        con = getConexion();
-
-        sql = "SELECT count(email) AS numero FROM usuarios WHERE email = ?";
-
-        ps = con.prepareStatement(sql);
-        ps.setString(1, usr.getEmail());
-        rs = ps.executeQuery();
-
-        while (rs.next()) {
-
-            int num = rs.getInt("numero");
-            if (num > 0) {
-                throw new RegistroUsuasrioException(7);
-            }
+    public void existeMail(Usuario usr) throws BinainException, SQLException {
+        if (cuentaMail(usr) > 0) {
+            throw new BinainException(7);
         }
-
-        con.close();
     }
 
     /**
@@ -188,40 +159,49 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
         }
     }
 
+    /**
+     *
+     * @param usr
+     * @throws BinainException
+     * @throws SQLException
+     */
     @Override
-    public boolean iniciarSesion(Usuario usr) {
-        try {
-            con = getConexion();
+    public void iniciarSesion(Usuario usr) throws BinainException, SQLException {
 
-            sql = "SELECT idUsuario, nickName, password, idTipoUsr FROM usuarios WHERE nickName = ?";
+        if (cuentaUsuarios(usr) == 0) {
+            throw new BinainException(10);
+        }
 
-            ps = con.prepareStatement(sql);
-            ps.setString(1, usr.getNickName());
-            rs = ps.executeQuery();
+        con = getConexion();
 
-            if (rs.next()) {
-                if (usr.getPassword().equals(rs.getString(3))) {
+        sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
 
-                    //Le paso los datos al modelo Usuario para poder acceder a ellos
-                    usr.setIdUsuario(rs.getInt(1));
-                    usr.setNickName(rs.getString(2));
-                    usr.setIdTipoUsr(rs.getInt(4));
+        ps = con.prepareStatement(sql);
+        ps.setString(1, usr.getNickName());
+        rs = ps.executeQuery();
 
-                    return true;
-                } else {
-                    return false;
-                }
+        if (rs.next()) {
+
+            //Evalua que el usuario existe y que la contraseña introducida es correcta
+            if (!usr.getPassword().equals(rs.getString(3))) {
+                throw new BinainException(9);
 
             }
+            //Establecemos el valor del atriobuto last_session
+            String sqlUpdate = "UPDATE usuarios SET last_session = ? WHERE idUsuario = ?";
+            ps = con.prepareStatement(sqlUpdate);
+            ps.setString(1, usr.getLastSession());
+            ps.setInt(2, rs.getInt(1));
+            ps.execute();
 
-            con.close();
-            return false;
-        } catch (SQLException ex) {
-            System.out.println("Error al cerrar la conexión con la BBDD"
-                    + "\nMensaje SQLException: " + ex.getMessage()
-                    + "\nCódgio de error: " + ex.getErrorCode());
-            return false;
+            //Le paso los datos al modelo Usuario para poder acceder a ellos
+            usr.setIdUsuario(rs.getInt(1));
+            usr.setNickName(rs.getString(2));
+            usr.setIdTipoUsr(rs.getInt(5));
+            usr.setEmail(rs.getString(4));
+
         }
+        con.close();
     }
 
     @Override
@@ -236,4 +216,41 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public int cuentaUsuarios(Usuario usr) throws SQLException {
+        int num = 0;
+
+        con = getConexion();
+
+        sql = "SELECT count(nickName) AS numero FROM usuarios WHERE nickName = ?";
+
+        ps = con.prepareStatement(sql);
+        ps.setString(1, usr.getNickName());
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            num = rs.getInt("numero");
+        }
+
+        con.close();
+        return num;
+    }
+
+    public int cuentaMail(Usuario usr) throws SQLException {
+        int num = 0;
+
+        con = getConexion();
+
+        sql = "SELECT count(email) AS numero FROM usuarios WHERE email = ?";
+
+        ps = con.prepareStatement(sql);
+        ps.setString(1, usr.getEmail());
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            num = rs.getInt("numero");
+        }
+
+        con.close();
+        return num;
+    }
 }

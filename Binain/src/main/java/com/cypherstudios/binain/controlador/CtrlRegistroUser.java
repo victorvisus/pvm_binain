@@ -1,8 +1,9 @@
 package com.cypherstudios.binain.controlador;
 
+import com.cypherstudios.binain.app.mvpBinainApp;
 import com.cypherstudios.binain.modelo.*;
 import com.cypherstudios.binain.util.*;
-import com.cypherstudios.binain.exception.RegistroUsuasrioException;
+import com.cypherstudios.binain.exception.BinainException;
 import com.cypherstudios.binain.vista.PanelRegistro;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,14 +24,15 @@ public class CtrlRegistroUser implements ActionListener {
     private UsuarioDAO userDao = new UsuarioDAO();
 
     //Vista
-    private PanelRegistro appRegistro;
+    private PanelRegistro appRegistro = new PanelRegistro();
 
-    public CtrlRegistroUser(PanelRegistro appRegistro) {
-        this.appRegistro = appRegistro;
+    //Inicio
+    //CtrlInicio ctrlInicio = new CtrlInicio();
+    public CtrlRegistroUser() {
 
         this.appRegistro.btnRegistrar.addActionListener(this);
+        this.appRegistro.btnVolver.addActionListener(this);
         this.appRegistro.btnSalir.addActionListener(this);
-
     }
 
     public void iniciarRegistro() {
@@ -47,10 +49,11 @@ public class CtrlRegistroUser implements ActionListener {
         if (e.getSource() == appRegistro.btnSalir) {
             //Cierra la aplicación
             System.exit(0);
+        }
+        if (e.getSource() == appRegistro.btnVolver) {
+            appRegistro.dispose();
+            mvpBinainApp.ctrlInicio.iniciarInicio();
 
-            /*
-            Luego esta ventana debera llevar a la de Login
-             */
         }
 
         if (e.getSource() == appRegistro.btnRegistrar) {
@@ -113,9 +116,11 @@ public class CtrlRegistroUser implements ActionListener {
             }
 
             JOptionPane.showMessageDialog(null, "Usuario Registrado", "Registro de Usuario", JOptionPane.INFORMATION_MESSAGE);
-
             limpiaForm();
-        } catch (RegistroUsuasrioException ex) {
+
+            appRegistro.dispose();
+            mvpBinainApp.ctrlLogin.iniciarLogin();
+        } catch (BinainException ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Registro de Usuario", JOptionPane.ERROR_MESSAGE);
 
         } catch (SQLException ex) {
@@ -142,10 +147,9 @@ public class CtrlRegistroUser implements ActionListener {
      * Para validar campos duplicados recogo el error que lanza la BBDD, esta
      * operación se encuentra en el bloque try/catch del método de control
      *
-     * @throws RegistroUsuasrioException : lanza un mensaje dependiendo del tipo
-     * de error
+     * @throws BinainException : lanza un mensaje dependiendo del tipo de error
      */
-    private void validaForm() throws RegistroUsuasrioException {
+    private void validaForm() throws BinainException {
 
         String pass = new String(appRegistro.txtPassword.getPassword());
         String passConf = new String(appRegistro.txtPasswordConf.getPassword());

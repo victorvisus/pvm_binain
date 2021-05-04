@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Victor
  */
-public abstract class Usuario extends UsuarioDAO implements IOperacionesUsuario {
+public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
 
     private int idUsuario;
     private int idTipoUsr;
@@ -19,7 +19,7 @@ public abstract class Usuario extends UsuarioDAO implements IOperacionesUsuario 
     protected String nickName;
     protected String password;
     protected String email;
-    protected String lastSession;
+    private String lastSession;
 
     protected DatosPersonales datosPersonales;
 
@@ -82,6 +82,14 @@ public abstract class Usuario extends UsuarioDAO implements IOperacionesUsuario 
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getLastSession() {
+        return lastSession;
+    }
+
+    public void setLastSession(String lastSession) {
+        this.lastSession = lastSession;
     }
 
     //DatosPersonales
