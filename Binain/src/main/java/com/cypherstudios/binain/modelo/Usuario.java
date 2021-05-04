@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Victor
  */
-public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
+public abstract class Usuario extends UsuarioDAO implements IOperacionesUsuario {
 
     private int idUsuario;
     private int idTipoUsr;
@@ -19,7 +19,12 @@ public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
     protected String nickName;
     protected String password;
     protected String email;
+    protected String lastSession;
+
     protected DatosPersonales datosPersonales;
+
+    public Usuario() {
+    }
 
     /**
      * Constructor
@@ -41,6 +46,10 @@ public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
      */
     public int getIdUsuario() {
         return idUsuario;
+    }
+
+    public void setIdUsuario(int idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public int getIdTipoUsr() {
@@ -81,8 +90,22 @@ public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
 
     }
 
+    public DatosPersonales getDatosPersonales() {
+        return datosPersonales;
+    }
+
+    public void setDatosPersonales(DatosPersonales datosPersonales) {
+        this.datosPersonales = datosPersonales;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "idUsuario=" + idUsuario + ", idTipoUsr=" + idTipoUsr + ", nickName=" + nickName + ", password=" + password + ", email=" + email + ", lastSession=" + lastSession + ", datosPersonales=" + datosPersonales + '}';
+    }
+
     /**
-     * Método para almacenar los estilos del usuario en el ArrayList
+     * Aquí debería ir el Método para almacenar los estilos del usuario en el
+     * ArrayList
      *
      * Se tiene que ejecutar cuando se inicie la sesión
      *

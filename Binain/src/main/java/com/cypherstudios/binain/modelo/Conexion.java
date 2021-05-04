@@ -10,8 +10,15 @@ import java.sql.*;
  */
 public class Conexion {
 
+    private final String serverPrep = "useServerPrepStmts=true";
+    private final String useSSL = "useSSL=false";
+    private final String timeZone = "useTimezone=true";
+    private final String serverTimeZone = "serverTimezone=UTC";
+    private final String allowPublicKey = "allowPublicKeyRetrieval=true";
+
     private final String BASE = "binain_mvp";
-    private final String JDBC_URL = "jdbc:mysql://localhost:3306/" + BASE + "?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private final String JDBC_URL = "jdbc:mysql://localhost:3306/" + BASE + "?" + serverPrep + "&" + useSSL + "&" + timeZone + "&" + serverTimeZone + "&" + allowPublicKey;
+
     private final String JDBC_USER = "root";
     private final String JDBC_PASSWORD = "admin";
 

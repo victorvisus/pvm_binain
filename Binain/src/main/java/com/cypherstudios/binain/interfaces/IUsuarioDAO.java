@@ -1,10 +1,14 @@
 package com.cypherstudios.binain.interfaces;
 
+import com.cypherstudios.binain.modelo.Artista;
+import com.cypherstudios.binain.modelo.DatosPersonales;
+import com.cypherstudios.binain.modelo.Sala;
 import com.cypherstudios.binain.modelo.Usuario;
+import java.sql.SQLException;
 
 /**
- * Esta clase gestiona todas las operaciones que puede realizar el usuario sobre
- * la base de datos
+ * Esta clase establece los métodos que van a gestionar las consultas básicas
+ * que puede realizar el usuario sobre la base de datos
  *
  * @author Victor
  */
@@ -19,7 +23,13 @@ public interface IUsuarioDAO {
     /*
      ESTE MÉTODO SE PUEDE USAR SIN INICIAR SESIÓN
      */
-    public abstract boolean registrarUser(Usuario user);
+    public abstract void registrarUser(Usuario usr) throws SQLException;
+
+    public abstract void insertDatosPersonales(Usuario usr) throws SQLException;
+
+    public abstract void insertSala(Sala sala) throws SQLException;
+
+    public abstract void insertArtista(Artista artista) throws SQLException;
 
     /**
      *

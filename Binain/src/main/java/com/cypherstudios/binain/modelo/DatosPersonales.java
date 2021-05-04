@@ -12,6 +12,9 @@ public class DatosPersonales {
     private String direccion;
     private String localidad;
 
+    public DatosPersonales() {
+    }
+
     /**
      * Solo será obligatorio la localidad para crear el usuario
      *

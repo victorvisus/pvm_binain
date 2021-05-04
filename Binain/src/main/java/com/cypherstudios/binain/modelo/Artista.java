@@ -10,10 +10,30 @@ public class Artista extends Usuario {
 
     ArrayList<Eventos> eventos;
 
+    private String nombreArtista;
+
+    public Artista() {
+    }
+
     public Artista(String nickName, String password, String email,
-            DatosPersonales datosPersonales) {
+            DatosPersonales datosPersonales, String nombreSala) {
         super(nickName, password, email, datosPersonales);
 
+        this.nombreArtista = nombreArtista;
     }
+
+    public String getNombreArtista() {
+        return nombreArtista;
+    }
+
+    public void setNombreArtista(String nombreArtista) {
+        this.nombreArtista = nombreArtista;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " - Artista{" + "eventos=" + eventos + ", nombreArtista=" + nombreArtista + '}';
+    }
+
 
 }
