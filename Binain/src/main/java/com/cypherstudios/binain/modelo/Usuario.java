@@ -19,7 +19,8 @@ public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
     protected String nickName;
     protected String password;
     protected String email;
-    private String lastSession;
+
+    private String nombre_tipo;
 
     protected DatosPersonales datosPersonales;
 
@@ -84,12 +85,12 @@ public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
         this.email = email;
     }
 
-    public String getLastSession() {
-        return lastSession;
+    public String getNombre_tipo() {
+        return nombre_tipo;
     }
 
-    public void setLastSession(String lastSession) {
-        this.lastSession = lastSession;
+    public void setNombre_tipo(String nombre_tipo) {
+        this.nombre_tipo = nombre_tipo;
     }
 
     //DatosPersonales
@@ -108,7 +109,9 @@ public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "idUsuario=" + idUsuario + ", idTipoUsr=" + idTipoUsr + ", nickName=" + nickName + ", password=" + password + ", email=" + email + ", lastSession=" + lastSession + ", datosPersonales=" + datosPersonales + '}';
+        return "Usuario{" + "idUsuario=" + idUsuario + ", idTipoUsr=" + idTipoUsr + ", Nombre_tipo=" + nombre_tipo
+                + ", nickName=" + nickName + ", password=" + password
+                + ", email=" + email + ", datosPersonales=" + datosPersonales + '}';
     }
 
     /**

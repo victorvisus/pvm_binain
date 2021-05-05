@@ -13,6 +13,7 @@ public class Sala extends Usuario {
     private String nombreSala;
 
     public Sala() {
+        super();
     }
 
     public Sala(String nickName, String password, String email,

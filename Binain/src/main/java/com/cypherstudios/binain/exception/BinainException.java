@@ -8,6 +8,9 @@ public class BinainException extends Exception {
 
     private int codigoError;
 
+    public BinainException() {
+    }
+
     /**
      *
      * @param codigoError
@@ -66,7 +69,7 @@ public class BinainException extends Exception {
                 msjError = "El usuario no existe";
                 break;
             default:
-                msjError = "Error inesperado";
+                msjError = "Error de ejecución";
                 break;
         }
 

@@ -13,10 +13,11 @@ public class Artista extends Usuario {
     private String nombreArtista;
 
     public Artista() {
+        super();
     }
 
     public Artista(String nickName, String password, String email,
-            DatosPersonales datosPersonales, String nombreSala) {
+            DatosPersonales datosPersonales, String nombreArtista) {
         super(nickName, password, email, datosPersonales);
 
         this.nombreArtista = nombreArtista;

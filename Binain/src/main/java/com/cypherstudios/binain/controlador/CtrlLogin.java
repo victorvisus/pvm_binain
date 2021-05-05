@@ -23,10 +23,14 @@ import javax.swing.JTextField;
 public class CtrlLogin implements ActionListener {
 
     //Objetos
-    //private Usuario user;
-//    private DatosPersonales datPerson;
-//    private Sala sala;
-//    private Artista artista;
+    private Usuario usr;
+    private DatosPersonales datPerson;
+    public static Sala sala;
+    public static Artista artista;
+//    private Usuario usr = new Usuario();
+//    private DatosPersonales datPerson = new DatosPersonales();
+//    public static Sala sala = new Sala();
+//    public static Artista artista = new Artista();
 
     //Operaciones DAO
     private UsuarioDAO userDao = new UsuarioDAO();
@@ -70,6 +74,8 @@ public class CtrlLogin implements ActionListener {
         }
 
         if (e.getSource() == appLogin.btnAcceder) {
+            usr = new Usuario();
+
             try {
                 //Compruebo que los campos no esten vacios
                 ArrayList<JTextField> campos = new ArrayList<>();
@@ -80,21 +86,43 @@ public class CtrlLogin implements ActionListener {
                 String pass = new String(appLogin.txtPassword.getPassword());
                 String newPass = Hash.sha1(pass);
 
-                Usuario usr = new Usuario();
-
-                Date date = new Date();
-                DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
                 usr.setNickName(appLogin.txtUsuario.getText());
                 usr.setPassword(newPass);
-                usr.setLastSession(fechaHora.format(date));
 
-                userDao.iniciarSesion(usr);
+                if (userDao.saberTipoUser(usr).equals("Sala")) {
+                    sala = new Sala();
+                    userDao.iniciarSesionSala(usr, sala, datPerson);
 
-                JOptionPane.showMessageDialog(null, "Sesion iniciada correctamente", "Inicio de Sesión", JOptionPane.INFORMATION_MESSAGE);
+                    CtrlPanelUsuario ctrlPanelUsuario = new CtrlPanelUsuario(sala);
+                    ctrlPanelUsuario.iniciarPanelUsuarioSalas();
+                    appLogin.dispose();
 
-                appLogin.dispose();
-                mvpBinainApp.ctrlPanelUsuario.iniciarPanelUsuario();
+                } else if (userDao.saberTipoUser(usr).equals("Artista")) {
+                    artista = new Artista();
+                    userDao.iniciarSesionArtista(usr, artista, datPerson);
+
+                    CtrlPanelUsuario ctrlPanelUsuario = new CtrlPanelUsuario(artista);
+                    ctrlPanelUsuario.iniciarPanelUsuarioArtistas();
+                    appLogin.dispose();
+                } else {
+                    //   JOptionPane.showMessageDialog(null, "No hay usuario", "Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+                    throw new BinainException();
+                }
+
+//                JOptionPane.showMessageDialog(null, "Sesion iniciada correctamente", "Inicio de Sesión", JOptionPane.INFORMATION_MESSAGE);
+//
+//                if (sala != null) {
+//                    CtrlPanelUsuario ctrlPanelUsuario = new CtrlPanelUsuario(sala);
+//                    ctrlPanelUsuario.iniciarPanelUsuarioSalas();
+//                    appLogin.dispose();
+//                } else if (artista != null) {
+//                    CtrlPanelUsuario ctrlPanelUsuario = new CtrlPanelUsuario(artista);
+//                    ctrlPanelUsuario.iniciarPanelUsuarioArtistas();
+//                    appLogin.dispose();
+//                } else {
+//                    //JOptionPane.showMessageDialog(null, "No hay usuario logeado", "Inicio de Sesión", JOptionPane.ERROR_MESSAGE);
+//                    throw new BinainException();
+//                }
 
             } catch (BinainException ex) {
                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Inicio de Sesión", JOptionPane.ERROR_MESSAGE);

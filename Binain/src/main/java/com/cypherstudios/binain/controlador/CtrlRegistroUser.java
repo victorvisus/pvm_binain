@@ -15,11 +15,10 @@ import javax.swing.JTextField;
 public class CtrlRegistroUser implements ActionListener {
 
     //Objetos
-    //private Usuario user;
+    private Usuario usr;
     private DatosPersonales datPerson;
     private Sala sala;
     private Artista artista;
-
     //Operaciones DAO
     private UsuarioDAO userDao = new UsuarioDAO();
 
@@ -79,6 +78,7 @@ public class CtrlRegistroUser implements ActionListener {
             String passwordHash = Hash.sha1(pass);
 
             //Evaluo Si el usuario es Artista o Sala
+            usr = new Usuario();
             if (appRegistro.rbtnArtista.isSelected()) {
                 artista = new Artista();
 
@@ -116,6 +116,7 @@ public class CtrlRegistroUser implements ActionListener {
             }
 
             JOptionPane.showMessageDialog(null, "Usuario Registrado", "Registro de Usuario", JOptionPane.INFORMATION_MESSAGE);
+
             limpiaForm();
 
             appRegistro.dispose();

@@ -1,11 +1,12 @@
 package com.cypherstudios.binain.modelo;
 
+import com.cypherstudios.binain.app.mvpBinainApp;
 import com.cypherstudios.binain.exception.*;
 import java.sql.*;
 import com.cypherstudios.binain.interfaces.IUsuarioDAO;
+import com.cypherstudios.binain.modelo.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -158,6 +159,49 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
 
         }
     }
+    /**
+     * Saca el tipo de usuario que esta registrado en la Base de Datos
+     *
+     * @param usr
+     * @return
+     * @throws SQLException
+     * @throws BinainException
+     */
+    public String saberTipoUser(Usuario usr) throws SQLException, BinainException {
+        String tipo = "";
+
+        //Evalua que el usuario existe
+        if (cuentaUsuarios(usr) == 0) {
+            throw new BinainException(10);
+        }
+
+        con = getConexion();
+
+        //sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
+        sql = "SELECT u.idUsuario, u.nickName, u.password, u.email, u.idTipoUsr, t.nombre"
+                + " FROM usuarios AS u INNER JOIN tipo_usuarios AS t ON u.idTipoUsr = t.idTipoUsr"
+                + " WHERE nickName = ?";
+
+        ps = con.prepareStatement(sql);
+        ps.setString(1, usr.getNickName());
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            //Evalua que la contraseña introducida es correcta
+            if (!usr.getPassword().equals(rs.getString(3))) {
+                throw new BinainException(9);
+            }
+            usr.setIdUsuario(rs.getInt(1));
+            usr.setNickName(rs.getString(2));
+            usr.setIdTipoUsr(rs.getInt(5));
+            usr.setNombre_tipo(rs.getString(6));
+            tipo = usr.getNombre_tipo();
+        }
+        con.close();
+
+        return tipo;
+
+    }
 
     /**
      *
@@ -166,51 +210,148 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
      * @throws SQLException
      */
     @Override
-    public void iniciarSesion(Usuario usr) throws BinainException, SQLException {
+    public void iniciarSesionSala(Usuario usr, Sala sala, DatosPersonales datPerson) throws SQLException {
 
-        if (cuentaUsuarios(usr) == 0) {
-            throw new BinainException(10);
-        }
+//        //Evalua que el usuario existe
+//        if (cuentaUsuarios(usr) == 0) {
+//            throw new BinainException(10);
+//        }
 
         con = getConexion();
 
-        sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
+        //sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
+        sql = "SELECT u.idUsuario, u.nickName, u.password, u.email, u.idTipoUsr, t.nombre"
+                + " FROM usuarios AS u INNER JOIN tipo_usuarios AS t ON u.idTipoUsr = t.idTipoUsr"
+                + " WHERE nickName = ?";
 
         ps = con.prepareStatement(sql);
         ps.setString(1, usr.getNickName());
         rs = ps.executeQuery();
 
         if (rs.next()) {
-
-            //Evalua que el usuario existe y que la contraseña introducida es correcta
-            if (!usr.getPassword().equals(rs.getString(3))) {
-                throw new BinainException(9);
-
-            }
-            //Establecemos el valor del atriobuto last_session
-            String sqlUpdate = "UPDATE usuarios SET last_session = ? WHERE idUsuario = ?";
-            ps = con.prepareStatement(sqlUpdate);
-            ps.setString(1, usr.getLastSession());
-            ps.setInt(2, rs.getInt(1));
-            ps.execute();
-
-            //Le paso los datos al modelo Usuario para poder acceder a ellos
+            //Evalua que la contraseña introducida es correcta
+//            if (!usr.getPassword().equals(rs.getString(3))) {
+//                throw new BinainException(9);
+//            }
             usr.setIdUsuario(rs.getInt(1));
+            idUsuario = rs.getInt(1);
             usr.setNickName(rs.getString(2));
-            usr.setIdTipoUsr(rs.getInt(5));
+            usr.setPassword(rs.getString(3));
             usr.setEmail(rs.getString(4));
+            usr.setIdTipoUsr(rs.getInt(5));
+            usr.setNombre_tipo(rs.getString(6));
+
+            usr.setDatosPersonales(montarDatPerson(datPerson));
+
+            String sqlSala = "SELECT nombreSala FROM salas WHERE idUsuario = ?";
+            ps = con.prepareStatement(sqlSala);
+            ps.setInt(1, usr.getIdUsuario());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                sala.setNombreSala(rs.getString(1));
+            }
+            sala.setIdUsuario(usr.getIdUsuario());
+            sala.setIdTipoUsr(usr.getIdTipoUsr());
+            sala.setNombre_tipo(usr.getNombre_tipo());
+            sala.setNickName(usr.getNickName());
+            sala.setPassword(usr.getPassword());
+            sala.setEmail(usr.getEmail());
+            sala.setDatosPersonales(usr.getDatosPersonales());
 
         }
         con.close();
     }
 
+    /**
+     *
+     * @param usr
+     * @throws BinainException
+     * @throws SQLException
+     */
     @Override
-    public boolean modificarDatos(Usuario user) {
+    public void iniciarSesionArtista(Usuario usr, Artista artista, DatosPersonales datPerson) throws SQLException {
+
+        //Evalua que el usuario existe
+//        if (cuentaUsuarios(usr) == 0) {
+//            throw new BinainException(10);
+//        }
+
+        con = getConexion();
+
+        //sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
+        sql = "SELECT u.idUsuario, u.nickName, u.password, u.email, u.idTipoUsr, t.nombre"
+                + " FROM usuarios AS u INNER JOIN tipo_usuarios AS t ON u.idTipoUsr = t.idTipoUsr"
+                + " WHERE nickName = ?";
+
+        ps = con.prepareStatement(sql);
+        ps.setString(1, usr.getNickName());
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            //Evalua que la contraseña introducida es correcta
+//            if (!usr.getPassword().equals(rs.getString(3))) {
+//                throw new BinainException(9);
+//            }
+            usr.setIdUsuario(rs.getInt(1));
+            idUsuario = rs.getInt(1);
+            usr.setNickName(rs.getString(2));
+            usr.setPassword(rs.getString(3));
+            usr.setEmail(rs.getString(4));
+            usr.setIdTipoUsr(rs.getInt(5));
+            usr.setNombre_tipo(rs.getString(6));
+
+            usr.setDatosPersonales(montarDatPerson(datPerson));
+
+            String sqlArt = "SELECT nombreArtista FROM artistas WHERE idUsuario = ?";
+            ps = con.prepareStatement(sqlArt);
+            ps.setInt(1, usr.getIdUsuario());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                artista.setNombreArtista(rs.getString(1));
+            }
+
+            artista.setIdUsuario(usr.getIdUsuario());
+            artista.setIdTipoUsr(usr.getIdTipoUsr());
+            artista.setNombre_tipo(usr.getNombre_tipo());
+            artista.setNickName(usr.getNickName());
+            artista.setPassword(usr.getPassword());
+            artista.setEmail(usr.getEmail());
+            artista.setDatosPersonales(usr.getDatosPersonales());
+
+        }
+        con.close();
+    }
+
+    public DatosPersonales montarDatPerson(DatosPersonales datPerson) throws SQLException {
+        datPerson = new DatosPersonales();
+        //sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
+        sql = "SELECT nombre, apellido, direccion, localidad FROM datospersonales WHERE idUsuario = ?";
+
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, idUsuario);
+        rs = ps.executeQuery();
+
+        if (rs.next()) {
+            datPerson.setNombre(rs.getString(1));
+            datPerson.setApellido(rs.getString(2));
+            datPerson.setDireccion(rs.getString(3));
+            datPerson.setLocalidad(rs.getString(4));
+        }
+
+        return datPerson;
+    }
+
+    @Override
+    public boolean modificarDatos(Usuario user
+    ) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public boolean eliminarUsuario(Usuario user) {
+    public boolean eliminarUsuario(Usuario user
+    ) {
 
         //DELETE FROM `binain_mvp`.`usuarios` WHERE (`idUsuario` = '10');
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

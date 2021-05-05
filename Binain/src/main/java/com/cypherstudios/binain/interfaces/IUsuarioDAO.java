@@ -40,7 +40,9 @@ public interface IUsuarioDAO {
     /*
     SE TIENE QUE PODER ACCEDER SIN NECESIDAD
       DE INICIAR SESIÓN */
-    public abstract void iniciarSesion(Usuario user) throws BinainException, SQLException;
+    public abstract void iniciarSesionSala(Usuario user, Sala sala, DatosPersonales datPerson) throws SQLException;
+
+    public abstract void iniciarSesionArtista(Usuario user, Artista artista, DatosPersonales datPerson) throws SQLException;
 
     /**
      * Actualiza la información del usuario en la BBDD

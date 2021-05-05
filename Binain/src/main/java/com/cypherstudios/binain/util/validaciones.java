@@ -56,7 +56,7 @@ public class validaciones {
      */
     public static void valCorreo(String email) throws BinainException {
 
-        String pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*@[a-zA-Z0-9]*\\.[a-z]{3,4}$";
+        String pattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]*@[a-zA-Z0-9]*\\.[a-z]{2,4}$";
         /*
         ^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]* uno o más caracteres alfabéticos, numéricos o especiales, al principio de la cadena
         @ la arroba
