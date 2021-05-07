@@ -24,6 +24,8 @@ public class testCasting {
 
         System.out.println("pass: " + newPass);
 
+        Artista artista = new Artista();
+
 //        DatosPersonales datPerson = new DatosPersonales("Zaragoza");
 //
 //        Usuario usr = new Usuario("Vicho", "12234", "mail", datPerson);
