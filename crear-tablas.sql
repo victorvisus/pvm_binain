@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS test.tipo_usuarios (
   idTipoUsr INT NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(45) NOT NULL,
   PRIMARY KEY (idTipoUsr));
-  
+
   CREATE TABLE IF NOT EXISTS test.usuarios (
   idUsuario INT NOT NULL AUTO_INCREMENT,
   nickName VARCHAR(30) NOT NULL,
@@ -16,9 +16,9 @@ CREATE TABLE IF NOT EXISTS test.tipo_usuarios (
   CONSTRAINT idTipoUsr_usuarios
     FOREIGN KEY (idTipoUsr)
     REFERENCES test.tipo_usuarios (idTipoUsr));
-    
-INSERT INTO test.tipo_usuarios (nombre) VALUES (Sala);
-INSERT INTO test.tipo_usuarios (nombre) VALUES (Artista);
+
+INSERT INTO test.tipo_usuarios (nombre) VALUES ("Sala");
+INSERT INTO test.tipo_usuarios (nombre) VALUES ("Artista");
 
 CREATE TABLE IF NOT EXISTS test.salas (
   idSala INT NOT NULL AUTO_INCREMENT,
@@ -26,14 +26,23 @@ CREATE TABLE IF NOT EXISTS test.salas (
   idUsuario INT NOT NULL,
   PRIMARY KEY (idSala),
   UNIQUE INDEX idSala_UNIQUE (idSala ASC) VISIBLE);
-  
+
 CREATE TABLE IF NOT EXISTS test.artistas (
   idArtista INT NOT NULL AUTO_INCREMENT,
   nombreArtista VARCHAR(45) NOT NULL,
   idUsuario INT NOT NULL,
   PRIMARY KEY (idArtista),
   UNIQUE INDEX idArtista_UNIQUE (idArtista ASC) VISIBLE);
-  
+
+CREATE TABLE IF NOT EXISTS test.datospersonales (
+  idDatosPersonales INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(45) NULL DEFAULT NULL,
+  apellido VARCHAR(45) NULL DEFAULT NULL,
+  direccion VARCHAR(45) NULL DEFAULT NULL,
+  localidad VARCHAR(45) NOT NULL,
+  idUsuario INT NOT NULL,
+  PRIMARY KEY (idDatosPersonales));
+
 CREATE TABLE IF NOT EXISTS test.eventos (
   idEventos INT NOT NULL AUTO_INCREMENT,
   idArtista INT NOT NULL,
@@ -53,16 +62,7 @@ CREATE TABLE IF NOT EXISTS test.eventos (
     REFERENCES test.salas (idSala)
     ON DELETE CASCADE
     ON UPDATE CASCADE);
-    
-CREATE TABLE IF NOT EXISTS test.datospersonales (
-  idDatosPersonales INT NOT NULL AUTO_INCREMENT,
-  nombre VARCHAR(45) NULL DEFAULT NULL,
-  apellido VARCHAR(45) NULL DEFAULT NULL,
-  direccion VARCHAR(45) NULL DEFAULT NULL,
-  localidad VARCHAR(45) NOT NULL,
-  idUsuario INT NOT NULL,
-  PRIMARY KEY (idDatosPersonales));
-  
+
  /* INSERTAR USUARIOS INVITADOS */ 
 INSERT INTO test.usuarios(nickName, password, email, idTipoUsr) VALUES ("invitadoSala", "0c0438a2d770051789cbafdd47fe25a9d7f74587", "sala@mail.com", 1);
 INSERT INTO test.usuarios(nickName, password, email, idTipoUsr) VALUES ("invitadoArtista", "0c0438a2d770051789cbafdd47fe25a9d7f74587", "artista@mail.com", 2);
