@@ -6,8 +6,6 @@
 package com.cypherstudios.binain.app;
 
 import com.cypherstudios.binain.modelo.Artista;
-import com.cypherstudios.binain.modelo.DatosPersonales;
-import com.cypherstudios.binain.modelo.Sala;
 import com.cypherstudios.binain.modelo.Usuario;
 import com.cypherstudios.binain.util.Hash;
 
@@ -17,6 +15,10 @@ import com.cypherstudios.binain.util.Hash;
  */
 public class testCasting {
 
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
 
         String pass = "invitado";
@@ -37,10 +39,18 @@ public class testCasting {
 //        determinarTipo(usr);
     }
 
+    /**
+     *
+     * @param usr
+     */
     public static void imprimir(Usuario usr) {
         System.out.println(usr.toString());
     }
 
+    /**
+     *
+     * @param usr
+     */
     public static void determinarTipo(Usuario usr) {
         if (usr instanceof Artista) {
             System.out.println("Es de tipo Artista" + usr.getClass());

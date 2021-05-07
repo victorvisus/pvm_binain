@@ -2,12 +2,7 @@ package com.cypherstudios.binain.app;
 
 import com.cypherstudios.binain.controlador.CtrlInicio;
 import com.cypherstudios.binain.controlador.CtrlLogin;
-import com.cypherstudios.binain.controlador.CtrlPanelUsuario;
 import com.cypherstudios.binain.controlador.CtrlRegistroUser;
-import com.cypherstudios.binain.modelo.Artista;
-import com.cypherstudios.binain.modelo.DatosPersonales;
-import com.cypherstudios.binain.modelo.Sala;
-import com.cypherstudios.binain.modelo.Usuario;
 
 /**
  *
@@ -16,17 +11,28 @@ import com.cypherstudios.binain.modelo.Usuario;
 public class mvpBinainApp {
 
     //Controladores
+    /**
+     * Instancia el controlador que se encarga de las funciones del panel de
+     * inicio de la aplicación
+     */
     public static CtrlInicio ctrlInicio = new CtrlInicio();
+
+    /**
+     * Instancia el controlador que se encarga de las funciones del panel de
+     * inicio de sesión
+     */
     public static CtrlLogin ctrlLogin = new CtrlLogin();
+
+    /**
+     * Instancia el controlador que se encarga de las funciones del panel de
+     * registro de usuario de la aplicación
+     */
     public static CtrlRegistroUser ctrlRegistro = new CtrlRegistroUser();
-    //public static CtrlPanelUsuario ctrlPanelUsuario;
 
-    //Objetos
-//    public static Usuario usr = new Usuario();
-//    public static Sala sala = new Sala();
-//    public static Artista artista = new Artista();
-//    public static DatosPersonales datPerson = new DatosPersonales();
-
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         ctrlInicio.iniciarInicio();
     }

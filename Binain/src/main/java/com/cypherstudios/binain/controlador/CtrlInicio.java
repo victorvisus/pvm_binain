@@ -17,6 +17,10 @@ public class CtrlInicio implements ActionListener {
 
     private Inicio appInicio = new Inicio();
 
+    /**
+     * Constructor "vacio" de la clase, en el cual se inician las "escuchas" a
+     * los botones del panel
+     */
     public CtrlInicio() {
 
         this.appInicio.btnIniciarSesion.addActionListener(this);
@@ -24,6 +28,9 @@ public class CtrlInicio implements ActionListener {
         this.appInicio.btnSalir.addActionListener(this);
     }
 
+    /**
+     * Arranca el panel de inicio
+     */
     public void iniciarInicio() {
         appInicio.setVisible(true);
 

@@ -48,7 +48,7 @@ public class CtrlPanelUsuario implements ActionListener {
     public void iniciarPanelUsuarioSalas() {
         appPanUsuario.setVisible(true);
 
-        appPanUsuario.setTitle("Binain - Panel de Opciones");
+        appPanUsuario.setTitle("Binain - Panel de Opciones" + " " + sala.getNombreSala());
         appPanUsuario.setLocationRelativeTo(null);
 
         appPanUsuario.lblNombre.setText(sala.getNickName());
@@ -61,7 +61,7 @@ public class CtrlPanelUsuario implements ActionListener {
     public void iniciarPanelUsuarioArtistas() {
         appPanUsuario.setVisible(true);
 
-        appPanUsuario.setTitle("Binain - Panel de Opciones");
+        appPanUsuario.setTitle("Binain - Panel de Opciones" + " " + artista.getNombreArtista());
         appPanUsuario.setLocationRelativeTo(null);
 
         appPanUsuario.lblNombre.setText(artista.getNickName());
