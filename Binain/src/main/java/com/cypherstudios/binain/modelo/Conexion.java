@@ -16,7 +16,8 @@ public class Conexion {
     private final String serverTimeZone = "serverTimezone=UTC";
     private final String allowPublicKey = "allowPublicKeyRetrieval=true";
 
-    private final String BASE = "binain_mvp";
+    //private final String BASE = "binain_mvp";
+    private final String BASE = "test";
     private final String JDBC_URL = "jdbc:mysql://localhost:3306/" + BASE + "?" + serverPrep + "&" + useSSL + "&" + timeZone + "&" + serverTimeZone + "&" + allowPublicKey;
 
     private final String JDBC_USER = "root";

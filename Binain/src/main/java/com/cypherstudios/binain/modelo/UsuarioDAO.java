@@ -206,7 +206,8 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
     /**
      *
      * @param usr
-     * @throws BinainException
+     * @param sala
+     * @param datPerson
      * @throws SQLException
      */
     @Override
@@ -266,7 +267,8 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
     /**
      *
      * @param usr
-     * @throws BinainException
+     * @param artista
+     * @param datPerson
      * @throws SQLException
      */
     @Override
