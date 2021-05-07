@@ -1,4 +1,9 @@
-CREATE TABLE IF NOT EXISTS test.usuarios (
+CREATE TABLE IF NOT EXISTS test.tipo_usuarios (
+  idTipoUsr INT NOT NULL AUTO_INCREMENT,
+  nombre VARCHAR(45) NOT NULL,
+  PRIMARY KEY (idTipoUsr));
+  
+  CREATE TABLE IF NOT EXISTS test.usuarios (
   idUsuario INT NOT NULL AUTO_INCREMENT,
   nickName VARCHAR(30) NOT NULL,
   password VARCHAR(100) NOT NULL,
@@ -12,11 +17,6 @@ CREATE TABLE IF NOT EXISTS test.usuarios (
     FOREIGN KEY (idTipoUsr)
     REFERENCES test.tipo_usuarios (idTipoUsr));
     
-CREATE TABLE IF NOT EXISTS test.tipo_usuarios (
-  idTipoUsr INT NOT NULL AUTO_INCREMENT,
-  nombre VARCHAR(45) NOT NULL,
-  PRIMARY KEY (idTipoUsr));
-  
 INSERT INTO test.tipo_usuarios (nombre) VALUES (Sala);
 INSERT INTO test.tipo_usuarios (nombre) VALUES (Artista);
 
