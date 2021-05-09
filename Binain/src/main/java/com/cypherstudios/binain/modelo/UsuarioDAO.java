@@ -4,6 +4,7 @@ import com.cypherstudios.binain.exception.*;
 import java.sql.*;
 import com.cypherstudios.binain.interfaces.IUsuarioDAO;
 import com.cypherstudios.binain.modelo.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -156,6 +157,7 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
 
         }
     }
+
     /**
      * Saca el tipo de usuario que esta registrado en la Base de Datos
      *
@@ -214,7 +216,6 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
 //        if (cuentaUsuarios(usr) == 0) {
 //            throw new BinainException(10);
 //        }
-
         con = getConexion();
 
         //sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
@@ -275,7 +276,6 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
 //        if (cuentaUsuarios(usr) == 0) {
 //            throw new BinainException(10);
 //        }
-
         con = getConexion();
 
         //sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
@@ -334,29 +334,87 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
 
         if (rs.next()) {
             datPerson.setIdDatosPersonales(rs.getInt(1));
-            datPerson.setNombre(rs.getString(1));
-            datPerson.setApellido(rs.getString(2));
-            datPerson.setDireccion(rs.getString(3));
-            datPerson.setLocalidad(rs.getString(4));
+            datPerson.setNombre(rs.getString(2));
+            datPerson.setApellido(rs.getString(3));
+            datPerson.setDireccion(rs.getString(4));
+            datPerson.setLocalidad(rs.getString(5));
         }
 
         return datPerson;
     }
 
     @Override
-    public boolean modificarDatos(Usuario user
-    ) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void modificarDatos(Usuario user) throws SQLException {
+        con = getConexion();
+
+        idUsuario = user.getIdUsuario();
+
+        String sqlUpUsr = "UPDATE usuarios SET nickName = ?, email = ? WHERE (idUsuario = '" + idUsuario + "');";
+        String sqlUpDat = "UPDATE datospersonales SET nombre = ?, apellido = ?, direccion = ?, localidad = ? WHERE (idDatosPersonales = '" + idUsuario + "');";
+        String sqlUpSala = "UPDATE salas SET nombreSala = ? WHERE (idUsuario = '" + idUsuario + "');";
+        String sqlUpArtista = "UPDATE artistas SET nombreArtista = ? WHERE (idUsuario = '" + idUsuario + "');";
+
+        ps = con.prepareStatement(sqlUpUsr);
+        ps.setString(1, user.getNickName());
+        ps.setString(2, user.getEmail());
+        System.out.println(sqlUpUsr);
+        ps.executeUpdate();
+
+        ps = con.prepareStatement(sqlUpDat);
+        ps.setString(1, user.getDatosPersonales().getNombre());
+        ps.setString(2, user.getDatosPersonales().getApellido());
+        ps.setString(3, user.getDatosPersonales().getDireccion());
+        ps.setString(4, user.getDatosPersonales().getLocalidad());
+        System.out.println(sqlUpDat);
+        ps.executeUpdate();
+
+        if (user instanceof Sala) {
+            ps = con.prepareStatement(sqlUpSala);
+            ps.setString(1, ((Sala) user).getNombreSala());
+            System.out.println(sqlUpSala);
+            System.out.println(user.toString());
+            ps.executeUpdate();
+        } else if (user instanceof Artista) {
+            ps = con.prepareStatement(sqlUpArtista);
+            ps.setString(1, ((Artista) user).getNombreArtista());
+            System.out.println(user.toString());
+            System.out.println(sqlUpArtista);
+            ps.executeUpdate();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error con casteo user", "Actualizar Usuario", JOptionPane.ERROR_MESSAGE);
+        }
+
+        con.close();
     }
 
     @Override
-    public boolean eliminarUsuario(Usuario user
-    ) {
+    public void eliminarUsuario(Usuario user) throws SQLException {
+        con = getConexion();
 
-        //DELETE FROM `binain_mvp`.`usuarios` WHERE (`idUsuario` = '10');
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        idUsuario = user.getIdUsuario();
+
+        String sqlDel1 = "DELETE FROM usuarios WHERE (idUsuario = '" + idUsuario + "');";
+        String sqlDel2 = "DELETE FROM datospersonales WHERE (idDatosPersonales = '" + idUsuario + "');";
+        String sqlDel3 = "DELETE FROM salas WHERE (idUsuario = '" + idUsuario + "');";
+        String sqlDel4 = "DELETE FROM artistas WHERE (idUsuario = '" + idUsuario + "');";
+
+        ps = con.prepareStatement(sqlDel1);
+        ps.executeUpdate();
+
+        ps = con.prepareStatement(sqlDel2);
+        ps.executeUpdate();
+
+        ps = con.prepareStatement(sqlDel3);
+        ps.executeUpdate();
+
+        ps = con.prepareStatement(sqlDel4);
+        ps.executeUpdate();
+
+        con.close();
+
     }
 
+    //Métodos Auxiliares
     public int cuentaUsuarios(Usuario usr) throws SQLException {
         int num = 0;
 

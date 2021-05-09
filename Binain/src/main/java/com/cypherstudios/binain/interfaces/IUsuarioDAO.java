@@ -1,6 +1,5 @@
 package com.cypherstudios.binain.interfaces;
 
-import com.cypherstudios.binain.exception.BinainException;
 import com.cypherstudios.binain.modelo.Artista;
 import com.cypherstudios.binain.modelo.DatosPersonales;
 import com.cypherstudios.binain.modelo.Sala;
@@ -50,7 +49,9 @@ public interface IUsuarioDAO {
      * @param user
      * @return
      */
-    public abstract boolean modificarDatos(Usuario user);
+    public abstract void modificarDatos(Usuario user) throws SQLException;
+
+    ;
 
     /**
      * Elimina al usuario de la BBDD
@@ -58,6 +59,7 @@ public interface IUsuarioDAO {
      * @param user
      * @return
      */
-    public abstract boolean eliminarUsuario(Usuario user);
+    public abstract void eliminarUsuario(Usuario user) throws SQLException;
+;
 
 }
