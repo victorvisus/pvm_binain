@@ -1,7 +1,6 @@
 package com.cypherstudios.binain.modelo;
 
 import com.cypherstudios.binain.interfaces.IOperacionesUsuario;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -110,8 +109,8 @@ public class Usuario extends UsuarioDAO implements IOperacionesUsuario {
     @Override
     public String toString() {
         return "Usuario{" + "idUsuario=" + idUsuario + ", idTipoUsr=" + idTipoUsr + ", Nombre_tipo=" + nombre_tipo
-                + ", nickName=" + nickName + ", password=" + password
-                + ", email=" + email + ", datosPersonales=" + datosPersonales + '}';
+                + "\n, nickName=" + nickName + ", password=" + password
+                + "\n, email=" + email + ", datosPersonales=" + datosPersonales + '}';
     }
 
     /**

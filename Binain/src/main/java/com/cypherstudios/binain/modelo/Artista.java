@@ -33,7 +33,7 @@ public class Artista extends Usuario {
 
     @Override
     public String toString() {
-        return super.toString() + " - Artista{" + "eventos=" + eventos + ", nombreArtista=" + nombreArtista + '}';
+        return super.toString() + "\n - Artista{" + "eventos=" + eventos + ", nombreArtista=" + nombreArtista + '}';
     }
 
 

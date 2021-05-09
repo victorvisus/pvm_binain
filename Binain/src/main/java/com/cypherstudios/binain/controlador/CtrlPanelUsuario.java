@@ -80,12 +80,14 @@ public class CtrlPanelUsuario implements ActionListener {
 
         if (e.getSource() == appPanUsuario.btnImprimeUsr) {
             if (sala != null) {
-                System.out.println("Usuario: " + sala.toString()
-                        + "Usuario tipo: " + sala.getNombre_tipo() + " - " + sala.getClass());
+                String datos = "Usuario: " + sala.toString() + "\nUsuario tipo: "
+                        + sala.getNombre_tipo() + "\nClase usr: " + sala.getClass();
+                JOptionPane.showMessageDialog(null, datos, "Registro de Usuario", JOptionPane.INFORMATION_MESSAGE);
 
             } else if (artista != null) {
-                System.out.println("Usuario: " + artista.toString()
-                        + "Usuario tipo: " + artista.getNombre_tipo() + " - " + artista.getClass());
+                String datos = "Usuario: " + artista.toString()
+                        + "\nUsuario tipo: " + artista.getNombre_tipo() + "\nClase usr: " + artista.getClass();
+                JOptionPane.showMessageDialog(null, datos, "Registro de Usuario", JOptionPane.INFORMATION_MESSAGE);
 
             } else {
                 JOptionPane.showMessageDialog(null, "No hay usuario logeado", "Inicio de Sesión", JOptionPane.ERROR_MESSAGE);

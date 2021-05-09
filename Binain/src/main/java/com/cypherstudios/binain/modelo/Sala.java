@@ -33,7 +33,7 @@ public class Sala extends Usuario {
 
     @Override
     public String toString() {
-        return super.toString() + " - Sala{" + "eventos=" + eventos + ", nombreSala=" + nombreSala + '}';
+        return super.toString() + "\n - Sala{" + "eventos=" + eventos + ", nombreSala=" + nombreSala + '}';
     }
 
 }

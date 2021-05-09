@@ -58,7 +58,12 @@ public class PanelUsuario extends javax.swing.JFrame {
 
         btnSalir.setText("Salir");
 
-        btnImprimeUsr.setText("imprime usuario");
+        btnImprimeUsr.setText("Comprobar Datos usuario");
+        btnImprimeUsr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimeUsrActionPerformed(evt);
+            }
+        });
 
         lblNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
 
@@ -96,7 +101,7 @@ public class PanelUsuario extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(476, Short.MAX_VALUE)
+                        .addContainerGap(423, Short.MAX_VALUE)
                         .addComponent(btnImprimeUsr)
                         .addGap(186, 186, 186)
                         .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -134,6 +139,10 @@ public class PanelUsuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnImprimeUsrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimeUsrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImprimeUsrActionPerformed
 
     /**
      * @param args the command line arguments

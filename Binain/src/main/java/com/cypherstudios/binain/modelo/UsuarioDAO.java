@@ -1,12 +1,9 @@
 package com.cypherstudios.binain.modelo;
 
-import com.cypherstudios.binain.app.mvpBinainApp;
 import com.cypherstudios.binain.exception.*;
 import java.sql.*;
 import com.cypherstudios.binain.interfaces.IUsuarioDAO;
 import com.cypherstudios.binain.modelo.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -329,13 +326,14 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
     public DatosPersonales montarDatPerson(DatosPersonales datPerson) throws SQLException {
         datPerson = new DatosPersonales();
         //sql = "SELECT idUsuario, nickName, password, email, idTipoUsr FROM usuarios WHERE nickName = ?";
-        sql = "SELECT nombre, apellido, direccion, localidad FROM datospersonales WHERE idUsuario = ?";
+        sql = "SELECT idDatosPersonales, nombre, apellido, direccion, localidad FROM datospersonales WHERE idUsuario = ?";
 
         ps = con.prepareStatement(sql);
         ps.setInt(1, idUsuario);
         rs = ps.executeQuery();
 
         if (rs.next()) {
+            datPerson.setIdDatosPersonales(rs.getInt(1));
             datPerson.setNombre(rs.getString(1));
             datPerson.setApellido(rs.getString(2));
             datPerson.setDireccion(rs.getString(3));

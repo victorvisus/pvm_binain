@@ -57,6 +57,10 @@ public class DatosPersonales {
         return idDatosPersonales;
     }
 
+    public void setIdDatosPersonales(int idDatosPersonales) {
+        this.idDatosPersonales = idDatosPersonales;
+    }
+
     public String getNombre() {
         return nombre;
     }
