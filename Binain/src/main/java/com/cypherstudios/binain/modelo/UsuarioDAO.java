@@ -420,6 +420,7 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
 
         con = getConexion();
 
+        //Cuenta los usuario que tiene el mismo nick que el introducido
         sql = "SELECT count(nickName) AS numero FROM usuarios WHERE nickName = ?";
 
         ps = con.prepareStatement(sql);
@@ -439,6 +440,7 @@ public class UsuarioDAO extends Conexion implements IUsuarioDAO {
 
         con = getConexion();
 
+        //Cuenta los usuario que tiene el mismo mail que el introducido
         sql = "SELECT count(email) AS numero FROM usuarios WHERE email = ?";
 
         ps = con.prepareStatement(sql);
