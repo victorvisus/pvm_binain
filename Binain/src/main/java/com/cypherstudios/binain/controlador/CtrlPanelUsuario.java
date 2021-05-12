@@ -72,7 +72,7 @@ public class CtrlPanelUsuario implements ActionListener {
         appPanUsuario.txtNombreUsuario.setText(sala.getDatosPersonales().getNombre());
         appPanUsuario.txtApeUsuario.setText(sala.getDatosPersonales().getApellido());
         appPanUsuario.txtDirUsuario.setText(sala.getDatosPersonales().getDireccion());
-        appPanUsuario.txtCiudadUsuario.setText(artista.getDatosPersonales().getLocalidad());
+        appPanUsuario.txtCiudadUsuario.setText(sala.getDatosPersonales().getLocalidad());
 
         appPanUsuario.menuArtista.setVisible(false);
     }
