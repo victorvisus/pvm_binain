@@ -3,7 +3,7 @@ package com.cypherstudios.binain.modelo;
 import com.cypherstudios.binain.exception.*;
 import java.sql.*;
 import com.cypherstudios.binain.interfaces.IUsuarioDAO;
-import com.cypherstudios.binain.modelo.*;
+//import com.cypherstudios.binain.modelo.*;
 import javax.swing.JOptionPane;
 
 /**
