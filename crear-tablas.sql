@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS test.tipo_usuarios (
   nickName VARCHAR(30) NOT NULL,
   password VARCHAR(100) NOT NULL,
   email VARCHAR(45) NOT NULL,
-  idTipoUsr INT NULL DEFAULT NULL COMMENT '\'sala | artista\'\\nALTER TABLE usuarios ADD CONSTRAINT tipoUser_VAL CHECK (nombre IN (\'Sala\',\'Artista\'));',
+  idTipoUsr INT NULL DEFAULT NULL COMMENT '\'sala | artista\'\\nALTER TABLE usuarios ADD CONSTRAINT tipoUser_VAL CHECK (nombredatospersonales IN (\'Sala\',\'Artista\'));',
   PRIMARY KEY (idUsuario),
   UNIQUE INDEX email_UNIQUE (email ASC) VISIBLE,
   UNIQUE INDEX nickName_UNIQUE (nickName ASC) INVISIBLE,

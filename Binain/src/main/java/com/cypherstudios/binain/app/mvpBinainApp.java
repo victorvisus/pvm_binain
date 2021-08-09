@@ -17,6 +17,7 @@ public class mvpBinainApp {
      */
     public static CtrlInicio ctrlInicio = new CtrlInicio();
 
+    /* ***************************************** ESTE BLOQUE CREO QUE SOBRA ****/
     /**
      * Instancia el controlador que se encarga de las funciones del panel de
      * inicio de sesión
@@ -29,6 +30,7 @@ public class mvpBinainApp {
      */
     public static CtrlRegistroUser ctrlRegistro = new CtrlRegistroUser();
 
+    /* ***************************************** ************************** ****/
     /**
      *
      * @param args
